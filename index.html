@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Envoi dictée CE1</title>
+</head>
+<body>
+  <h2>Choisis ton animal</h2>
+  <select id="animal">
+    <option>Axolotl</option>
+    <option>Boa</option>
+    <option>Lézard</option>
+    <option>Chouette</option>
+    <option>Ours</option>
+  </select>
+
+  <h2>Ajoute une photo de ta dictée</h2>
+  <input type="file" id="photo" accept="image/*" capture="environment"><br><br>
+
+  <button onclick="envoyer()">Envoyer la dictée</button>
+
+  <p id="status"></p>
+
+  <script>
+    async function envoyer() {
+      const animal = document.getElementById("animal").value;
+      const fichier = document.getElementById("photo").files[0];
+      if (!fichier) {
+        alert("Ajoute une photo !");
+        return;
+      }
+
+      // Lire la photo en base64
+      const reader = new FileReader();
+      reader.onload = async function () {
+        const base64 = reader.result.split(',')[1];
+
+        const response = await fetch("https://script.google.com/macros/s/AKfycbxlSViqX5LlMnsWoCnkjA1s0mLV9bjfiZhp2kT8MWJLb1v3jv3WRswD14QYRcxXMqiO4Q/exec", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            animal: animal,
+            image: base64,
+            text: "à remplir par OCR" // Le script Apps Script fera l'OCR si tu veux l'ajouter plus tard
+          })
+        });
+
+        document.getElementById("status").textContent = "Dictée envoyée avec succès !";
+      };
+
+      reader.readAsDataURL(fichier);
+    }
+  </script>
+</body>
+</html>
