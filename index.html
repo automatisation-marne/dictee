@@ -3,21 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <title>Envoi dictée CE1</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 30px;
+      background-color: #f9f9f9;
+    }
+    h2 {
+      color: #333;
+    }
+    select, input[type="file"], button {
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    #status {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
+
   <h2>Choisis ton animal</h2>
   <select id="animal">
     <option>Axolotl</option>
     <option>Boa</option>
-    <option>Lézard</option>
+    <option>Chat</option>
+    <option>Chien</option>
     <option>Chouette</option>
+    <option>Furet</option>
+    <option>Gecko</option>
+    <option>Grue</option>
+    <option>Koala</option>
+    <option>Lapin</option>
+    <option>Lézard</option>
+    <option>Loup</option>
+    <option>Lynx</option>
+    <option>Oie</option>
+    <option>Otarie</option>
     <option>Ours</option>
+    <option>Panda</option>
+    <option>Puma</option>
+    <option>Renard</option>
+    <option>Tigre</option>
   </select>
 
   <h2>Ajoute une photo de ta dictée</h2>
   <input type="file" id="photo" accept="image/*" capture="environment"><br><br>
 
   <button onclick="envoyer()">Envoyer la dictée</button>
+
   <p id="status"></p>
 
   <script>
@@ -43,8 +79,7 @@
             },
             body: JSON.stringify({
               animal: animal,
-              image: base64,
-              text: "à remplir par OCR"
+              image: base64
             })
           });
 
@@ -62,5 +97,6 @@
       reader.readAsDataURL(fichier);
     }
   </script>
+
 </body>
 </html>
